@@ -24,14 +24,14 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $home = 'user.home';
+        $home = 'doctor.home';
 
         if($user->hasRole('admin')){
           $home = 'admin.home';
-        }else if($user->hasRole('secretary')){
-          $home = 'secretary.home';
+        }else if($user->hasRole('patient')){
+          $home = 'patient.home';
         }else{
-          $home = 'user.home';
+          $home = 'doctor.home';
         }
 
         return redirect()->route($home);

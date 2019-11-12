@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in as a secretary!
+                    You are logged in as a doctor user!
                 </div>
             </div>
         </div>

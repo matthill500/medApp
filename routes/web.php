@@ -11,10 +11,12 @@
 |
 */
 
+Route::get('/', 'PageController@welcome')->name('welcome');
+Route::get('/about', 'PageController@about')->name('about');
 
-Route::get('/', 'HomeController@index')->name('home');
 Auth::routes();
+
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/admin/home', 'Admin\HomeController@index')->name('admin.home');
-Route::get('/secretary/home', 'Secretary\HomeController@index')->name('secretary.home');
-Route::get('/user/home', 'User\HomeController@index')->name('user.home');
+Route::get('/patient/home', 'Patient\HomeController@index')->name('patient.home');
+Route::get('/doctor/home', 'Doctor\HomeController@index')->name('doctor.home');
