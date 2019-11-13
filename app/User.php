@@ -40,6 +40,9 @@ class User extends Authenticatable
     public function roles(){
       return $this->belongsToMany('App\Role','user_role');
     }
+    public function doctor(){
+      return $this->hasOne('App\doctor');
+    }
 
     public function hasRole($roles){
       return  null !== $this->roles()->where('name', $roles)->first();
