@@ -32,12 +32,12 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                       <li class="nav-item">
-                          <a class="navbar-brand" href="#">
+                          <a class="navbar-brand" href="/admin/home">
                             Medical Centre
                           </a>
                       </li>
                       <li class="nav-item">
-                        <a class="navbar-brand" href="#">
+                        <a class="navbar-brand" href="/admin/doctors">
                             Doctors
                         </a>
                       </li>
