@@ -43,6 +43,9 @@ class User extends Authenticatable
     public function doctor(){
       return $this->hasOne('App\doctor');
     }
+    public function patient(){
+      return $this->hasOne('App\patient');
+    }
 
     public function hasRole($roles){
       return  null !== $this->roles()->where('name', $roles)->first();
