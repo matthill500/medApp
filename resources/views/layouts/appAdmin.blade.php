@@ -47,7 +47,7 @@
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a class="navbar-brand" href="#">
+                        <a class="navbar-brand" href="/admin/visits">
                             Visits
                         </a>
                       </li>
