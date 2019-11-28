@@ -18,7 +18,7 @@
             </ul>
           </div>
           @endif
-          <form method="POST" action="{{route('admin.patients.update', $patients->id)}}">
+          <form method="POST" action="{{route('admin.patients.update', $patient->id)}}">
 
             <input type="hidden" name="_method" value ="PUT">
             <input type="hidden" name="_token">
@@ -26,22 +26,33 @@
 
             <div class="form-group">
               <label for="title">Name</label>
-              <input type="text" class="form-control" id="name" name="name" value="{{old('name', $patients->name)}}" />
+              <input type="text" class="form-control" id="name" name="name" value="{{old('name', $patient->user->name)}}" />
             </div>
 
             <div class="form-group">
               <label for="publisher">Phone</label>
-              <input type="text" class="form-control" id="phone" name="phone" value="{{old('phone', $patients->phone)}}" />
+              <input type="text" class="form-control" id="phone" name="phone" value="{{old('phone', $patient->phone)}}" />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Medical Insurance</label>
+              <select name="medInsurance_id">
+                @foreach($medInsurances as $medInsurance)
+                  <option value="{{$medInsurance->id}}" {{ (old('medInsurance_id', $patient->medInsurance->id) == $medInsurance->id) ? "selected" : "" }} >
+                    {{$medInsurance->companyName}}
+                  </option>
+                @endforeach
+              </select>
             </div>
 
             <div class="form-group">
               <label for="author">Email</label>
-              <input type="text" class="form-control" id="email" name="email" value="{{old('email', $patients->email)}}" />
+              <input type="text" class="form-control" id="email" name="email" value="{{old('email', $patient->user->email)}}" />
             </div>
 
             <div class="form-group">
               <label for="year">Address</label>
-              <input type="text" class="form-control" id="address" name="address" value="{{old('address', $patients->address)}}" />
+              <input type="text" class="form-control" id="address" name="address" value="{{old('address', $patient->address)}}" />
             </div>
 
 

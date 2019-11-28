@@ -19,6 +19,7 @@
             <th>Phone</th>
             <th>Email</th>
             <th>Address</th>
+            <th>Medical Insurance</th>
 
           </thead>
 
@@ -26,10 +27,11 @@
 
             @foreach ($patients as $patient)
               <tr data-id="{{$patient->user_id}}">
-                <td>{{ $patient->name }}</td>
+                <td>{{ $patient->user->name }}</td>
                 <td>{{ $patient->phone }}</td>
-                <td>{{ $patient->email }}</td>
+                <td>{{ $patient->user->email }}</td>
                 <td>{{ $patient->address }}</td>
+                <td>{{ $patient->medInsurance->companyName }}</td>
 
 
                 <td>

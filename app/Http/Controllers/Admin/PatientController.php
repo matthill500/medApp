@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Patient;
 use App\User;
+use App\medInsurance;
 use App\Role;
 use DB;
 class PatientController extends Controller
@@ -19,9 +20,11 @@ class PatientController extends Controller
   public function index()
   {
 
-    $patients = DB::table('patients')
-    ->leftJoin('users','users.id', '=', 'patients.user_id')
-    ->get();
+    //$patients = DB::table('patients')
+    //->leftJoin('users','users.id', '=', 'patients.user_id')
+    //->get();
+    $patients = Patient::all();
+
 
     return view('admin.patients.index')->with([
      'patients' => $patients
@@ -36,7 +39,11 @@ class PatientController extends Controller
   */
   public function create()
   {
-    return view('admin.patients.create');
+    $medInsurances = MedInsurance::all();
+
+    return view('admin.patients.create')->with([
+      'medInsurances' => $medInsurances
+    ]);
   }
 
   /**
@@ -51,6 +58,7 @@ class PatientController extends Controller
     'name' => 'required|',
     'email'  => 'required|email|unique:users,email',
     'password'  => 'required|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/',
+    'medInsurance_id' => 'required',
     'phone'  => 'required|max:14',
     'address'  => 'required|max:30',
     ]);
@@ -65,6 +73,7 @@ class PatientController extends Controller
     $patient = new Patient();
 
     $patient->phone = $request->input('phone');
+    $patient->medInsurance_id = $request->input('medInsurance_id');
     $patient->address = $request->input('address');
 
     $patient->user_id = $user->id;
@@ -86,14 +95,12 @@ class PatientController extends Controller
   */
   public function show($id)
   {
-  $patients = DB::table('patients')
-  ->leftJoin('users','users.id', '=', 'patients.user_id')
-  ->where('user_id', '=', $id)
-  ->first();
+  $patient = Patient::findOrFail($id);
+
 
 
     return view('admin.patients.show')->with([
-      'patients' => $patients
+      'patient' => $patient
     ]);
   }
 
@@ -105,14 +112,19 @@ class PatientController extends Controller
   */
   public function edit($id)
   {
-  $patients = DB::table('patients')
-  ->leftJoin('users','users.id', '=', 'patients.user_id')
-  ->where('user_id', '=', $id)
-  ->first();
+//  $patients = DB::table('patients')
+//  ->leftJoin('users','users.id', '=', 'patients.user_id')
+//->where('user_id', '=', $id)
+//  ->first();
+
+  $medInsurances = MedInsurance::all();
+  $patient = Patient::findOrFail($id);
+
 
 
     return view('admin.patients.edit')->with([
-      'patients' => $patients
+      'patient' => $patient,
+      'medInsurances' => $medInsurances
     ]);
   }
 
@@ -125,25 +137,27 @@ class PatientController extends Controller
   */
   public function update(Request $request, $id)
   {
-  $user = User::findOrFail($id);
+    $patient = Patient::findOrFail($id);
 
-  $request->validate([
-  'name' => 'required|',
-  'email'  => 'required|email',
-  'phone'  => 'required|max:14',
-  'address'  => 'required|max:30',
-  ]);
+    $request->validate([
+    'name' => 'required|',
+    'email'  => 'required|email',
+    'phone'  => 'required|max:14',
+    'address'  => 'required|max:30',
+    ]);
 
 
-  $user->name = $request->input('name');
-  $user->email = $request->input('email');
-  $user->patient->phone = $request->input('phone');
-  $user->patient->address = $request->input('address');
+    $patient->user->name = $request->input('name');
+    $patient->user->email = $request->input('email');
+    $patient->phone = $request->input('phone');
+    $patient->medInsurance_id = $request->input('medInsurance_id');
+    $patient->address = $request->input('address');
 
-  $user->save();
-  $user->patient->save();
+    $patient->user->save();
+    $patient->save();
 
-  return redirect()->route('admin.patients.index');
+
+    return redirect()->route('admin.patients.index');
 
   }
 

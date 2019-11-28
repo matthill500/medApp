@@ -20,6 +20,7 @@ class PatientsTableSeeder extends Seeder
 
           $patient->phone = '0' . $this->random_str(2, '0123456789') . '-' . $this->random_str(7, '0123456789');
           $patient->address = $this->random_str(2, '0123456789') . " Main Street";
+          $patient->medInsurance_id = 1;
           $patient->user_id = $user->id;
           $patient->save();
         }
