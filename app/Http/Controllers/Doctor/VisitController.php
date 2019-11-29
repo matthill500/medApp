@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\doctor;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Visit;
 use App\Patient;
+use App\User;
+use App\Visit;
 use App\Doctor;
-class VisitController extends Controller
+use Auth;
+use App\medInsurance;
+
+class visitController extends Controller
 {
-      public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -25,35 +24,24 @@ class VisitController extends Controller
       $doctors = Doctor::all();
       $patients = Patient::all();
 
-      return view('admin.visits.index')->with([
+      return view('doctor.visits.index')->with([
         'visits' => $visits,
         'doctors' => $doctors,
         'patients' => $patients
       ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
       $patients = Patient::all();
       $doctors = Doctor::all();
-      return view('admin.visits.create')->with([
+      return view('doctor.visits.create')->with([
         'patients' => $patients,
         'doctors' => $doctors
 
       ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
       $request->validate([
@@ -61,7 +49,6 @@ class VisitController extends Controller
       'time'  => 'required',
       'duration'  => 'required',
       'cost' => 'required',
-      'doctor_id'  => 'required',
       'patient_id'  => 'required',
       ]);
 
@@ -71,57 +58,27 @@ class VisitController extends Controller
       $visit->visitDate = $request->input('date');
       $visit->duration = $request->input('duration');
       $visit->cost = $request->input('cost');
-      $visit->doctor_id = $request->input('doctor_id');
+      $visit->doctor_id = Auth::User()->doctor->id;
       $visit->patient_id = $request->input('patient_id');
 
       $visit->save();
 
-      return redirect()->route('admin.visits.index');
+      return redirect()->route('doctor.visits.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-      $vId = (int)$id;
-      $visit = Visit::findOrFail($vId);
-
-      return view('admin.visits.show')->with([
-        'visit' => $visit,
-        'id' => $vId
-      ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $patients = Patient::all();
         $doctors = Doctor::all();
         $visit = Visit::findOrFail($id);
 
-        return view('admin.visits.edit')->with([
+        return view('doctor.visits.edit')->with([
           'patients' => $patients,
           'doctors' => $doctors,
           'visit' => $visit
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
       $visit = Visit::findOrFail($id);
@@ -131,7 +88,6 @@ class VisitController extends Controller
       'time'  => 'required',
       'duration'  => 'required',
       'cost' => 'required',
-      'doctor_id'  => 'required',
       'patient_id'  => 'required',
       ]);
 
@@ -140,12 +96,11 @@ class VisitController extends Controller
       $visit->visitDate = $request->input('date');
       $visit->duration = $request->input('duration');
       $visit->cost = $request->input('cost');
-      $visit->doctor_id = $request->input('doctor_id');
       $visit->patient_id = $request->input('patient_id');
 
       $visit->save();
 
-      return redirect()->route('admin.visits.index');
+      return redirect()->route('doctor.visits.index');
 
     }
 
@@ -161,6 +116,6 @@ class VisitController extends Controller
 
       $visit->delete();
 
-      return redirect()->route('admin.visits.index');
+      return redirect()->route('doctor.visits.index');
     }
 }

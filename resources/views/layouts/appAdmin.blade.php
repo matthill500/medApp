@@ -33,7 +33,7 @@
                     <ul class="navbar-nav mr-auto">
                       <li class="nav-item">
                           <a class="navbar-brand" href="/admin/home">
-                            Medical Centre
+                            MedApp
                           </a>
                       </li>
                       <li class="nav-item">

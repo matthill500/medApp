@@ -120,8 +120,6 @@ class PatientController extends Controller
   $medInsurances = MedInsurance::all();
   $patient = Patient::findOrFail($id);
 
-
-
     return view('admin.patients.edit')->with([
       'patient' => $patient,
       'medInsurances' => $medInsurances

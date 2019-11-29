@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appDoctor')
 
 @section('content')
 <div class="container">
@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in as a doctor user!
+                    You are logged in as a doctor!
                 </div>
             </div>
         </div>
