@@ -44,7 +44,7 @@
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div *ngIf="response" class="btn-group">
-                    <button type="submit" class="form-control btn btn-danger">Delete</a>
+                    <button type="submit" class="form-control btn btn-danger">Cancel Visit</a>
                     </div>
                   </form>
                 </td>
