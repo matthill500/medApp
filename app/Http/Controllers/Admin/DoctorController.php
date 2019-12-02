@@ -79,7 +79,7 @@ class DoctorController extends Controller
 
         $user->roles()->attach(Role::where('name','doctor')->first());
 
-
+        $request->session()->flash('success', 'Doctor added successfully');
 
         return redirect()->route('admin.doctors.index');
     }
@@ -151,7 +151,7 @@ class DoctorController extends Controller
       $user->doctor->save();
 
 
-
+      $request->session()->flash('info', 'Doctor updated successfully');
 
       return redirect()->route('admin.doctors.index');
 
@@ -163,7 +163,7 @@ class DoctorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
 
       $user = User::findOrFail($id);
@@ -171,6 +171,8 @@ class DoctorController extends Controller
       $user->roles()->detach();
 
       $user->delete();
+
+      $request->session()->flash('danger', 'Doctor deleted successfully');
 
     return redirect()->route('admin.doctors.index');
 

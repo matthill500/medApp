@@ -14,13 +14,14 @@ class PatientsTableSeeder extends Seeder
      */
     public function run()
     {
+
         $role_patient = Role::where('name', 'patient')->first();
         foreach ($role_patient->users as $user) {
           $patient = new Patient();
 
           $patient->phone = '0' . $this->random_str(2, '0123456789') . '-' . $this->random_str(7, '0123456789');
           $patient->address = $this->random_str(2, '0123456789') . " Main Street";
-          $patient->medInsurance_id = 1;
+          $patient->medInsurance_id = $this->random_str(1, '123');
           $patient->user_id = $user->id;
           $patient->save();
         }
@@ -30,5 +31,7 @@ class PatientsTableSeeder extends Seeder
           $pieces = [];
           $max = mb_strlen($keyspace, '8bit') - 1; for ($i = 0; $i < $length; ++$i) {
           $pieces []= $keyspace[random_int(0, $max)]; }
-          return implode('', $pieces); }
+          return implode('', $pieces);
+         }
+
 }

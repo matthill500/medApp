@@ -63,6 +63,8 @@ class visitController extends Controller
 
       $visit->save();
 
+      $request->session()->flash('success', 'Visit added successfully');
+
       return redirect()->route('doctor.visits.index');
     }
 
@@ -100,6 +102,8 @@ class visitController extends Controller
 
       $visit->save();
 
+      $request->session()->flash('info', 'Visit updated successfully');
+
       return redirect()->route('doctor.visits.index');
 
     }
@@ -110,11 +114,13 @@ class visitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
       $visit = Visit::findOrFail($id);
 
       $visit->delete();
+
+      $request->session()->flash('danger', 'Visit cancelled successfully');
 
       return redirect()->route('doctor.visits.index');
     }

@@ -75,14 +75,12 @@ class PatientController extends Controller
     $patient->phone = $request->input('phone');
     $patient->medInsurance_id = $request->input('medInsurance_id');
     $patient->address = $request->input('address');
-
     $patient->user_id = $user->id;
-
     $patient->save();
 
     $user->roles()->attach(Role::where('name','patient')->first());
 
-
+    $request->session()->flash('success', 'Patient added successfully');
 
     return redirect()->route('admin.patients.index');
   }
@@ -154,6 +152,7 @@ class PatientController extends Controller
     $patient->user->save();
     $patient->save();
 
+    $request->session()->flash('info', 'Patient updated successfully');
 
     return redirect()->route('admin.patients.index');
 
@@ -165,7 +164,7 @@ class PatientController extends Controller
   * @param  int  $id
   * @return \Illuminate\Http\Response
   */
-  public function destroy($id)
+  public function destroy(Request $request, $id)
   {
 
   $user = User::findOrFail($id);
@@ -173,6 +172,8 @@ class PatientController extends Controller
   $user->roles()->detach();
 
   $user->delete();
+
+  $request->session()->flash('danger', 'Patient deleted successfully');
 
   return redirect()->route('admin.patients.index');
   }

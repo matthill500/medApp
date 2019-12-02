@@ -76,8 +76,28 @@
         </nav>
 
         <main class="py-4">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                @foreach (['danger', 'info', 'success', 'warning'] as $key)
+                  @if (Session::has($key))
+                  <div class="alert alert-{{$key}} alert-dismissible fade show" role="alert">
+                    {{Session::get($key)}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  @endif
+                @endforeach
+
+              </div>
+            </div>
+          </div>
             @yield('content')
-        </main>
-    </div>
-</body>
-</html>
+          </main>
+        </div>
+    </body>
+    <script>
+    setTimeout(function(){$('.alert').alert('close'); }, 3000);
+    </script>
+    </html>

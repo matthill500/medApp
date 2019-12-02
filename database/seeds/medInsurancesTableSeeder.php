@@ -15,5 +15,15 @@ class medInsurancesTableSeeder extends Seeder
       $medInsurance->companyName = '123.ie';
       $medInsurance->policyNum = '137phy';
       $medInsurance->save();
+
+      $medInsurance = new MedInsurance();
+      $medInsurance->companyName = 'quoteDevil';
+      $medInsurance->policyNum = 'abc456';
+      $medInsurance->save();
+
+      $medInsurance = new MedInsurance();
+      $medInsurance->companyName = 'goCompare';
+      $medInsurance->policyNum = '1738kj';
+      $medInsurance->save();
     }
 }

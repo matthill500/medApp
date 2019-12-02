@@ -36,11 +36,13 @@ class visitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
       $visit = Visit::findOrFail($id);
 
       $visit->delete();
+
+      $request->session()->flash('danger', 'Visit cancelled successfully');
 
       return redirect()->route('patient.visits.index');
     }
